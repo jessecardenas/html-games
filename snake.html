@@ -30,6 +30,8 @@ window.onload=function() {
     ctx=canv.getContext("2d");
     maxx = Math.floor(canv.width / blockx); // find grid size
     maxy = Math.floor(canv.height / blocky);
+    ax = Math.floor(Math.random() * maxx); // set apple position, in case it was out of grid
+    ay = Math.floor(Math.random() * maxy);
     setInterval(game, 1000 / 15);
     document.addEventListener("keydown", keyPush);
 }
@@ -85,9 +87,8 @@ function game() {
     }
     
     ctx.fillStyle = "white";
-    ctx.font = "20px Arial";
-    text = "";
-    text += (tail - 5) + " " + maxx + " " + maxy;
+    ctx.font = "20px monospace";
+    text = "Score: " + ( tail - 5);
     ctx.fillText(text, 1 * blockx, 2 * blocky);
     if(ax == px && ay == py) {
         tail++;
