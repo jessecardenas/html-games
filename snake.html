@@ -1,11 +1,23 @@
-<canvas id="gc" width="600" height="400"></canvas>
+<style>
+body, canvas {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+</style>
+<body>
+<canvas id="gc"></canvas>
+</body>
 <script>
 // Initializing variables
 px = py = 10;
 xv = yv = 0;
 blockx = blocky = 20; // size of grid blocks
-maxx = maxy = 20; // dimensions of grid. temp values. overwritten in onload.
-ax = ay = 15;
+maxx = maxy = 20; // dimensions of grid. temp values. overwritten in onload
+ax = Math.floor(Math.random() * maxx);
+ay = Math.floor(Math.random() * maxy);
 xv = yv = 0;
 trail = []; // array holding snake pieces
 tail = 5; // length of snake
@@ -13,12 +25,13 @@ keybuffer = []; // buffer for key presses. max one press per frame
 
 window.onload=function() {
     canv=document.getElementById("gc");
+    canv.width = window.innerWidth;
+    canv.height = window.innerHeight;
     ctx=canv.getContext("2d");
-    // dimentions of grid
-    maxx = Math.floor(canv.width / blockx);
+    maxx = Math.floor(canv.width / blockx); // find grid size
     maxy = Math.floor(canv.height / blocky);
-    document.addEventListener("keydown", keyPush);
     setInterval(game, 1000 / 15);
+    document.addEventListener("keydown", keyPush);
 }
 
 function game() {
@@ -73,7 +86,9 @@ function game() {
     
     ctx.fillStyle = "white";
     ctx.font = "20px Arial";
-    ctx.fillText(tail - 5, 1 * blockx, 2 * blocky);
+    text = "";
+    text += (tail - 5) + " " + maxx + " " + maxy;
+    ctx.fillText(text, 1 * blockx, 2 * blocky);
     if(ax == px && ay == py) {
         tail++;
         ax = Math.floor(Math.random() * maxx);
