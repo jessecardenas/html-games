@@ -21,6 +21,7 @@ ay = Math.floor(Math.random() * maxy);
 xv = yv = 0;
 trail = []; // array holding snake pieces
 tail = 5; // length of snake
+highscore = 0;
 keybuffer = []; // buffer for key presses. max one press per frame
 
 window.onload=function() {
@@ -78,6 +79,9 @@ function game() {
     for(var i = 0; i < trail.length; i++) {
         ctx.fillRect(trail[i].x * blockx, trail[i].y * blocky, blockx - 2, blocky - 2);
         if(i < trail.length - 1 && trail[i].x == px && trail[i].y == py) {
+            if(tail - 5 > highscore) {
+                highscore = tail - 5;
+            }
             tail = 5;
         }
     }
@@ -88,8 +92,12 @@ function game() {
     
     ctx.fillStyle = "white";
     ctx.font = "20px monospace";
-    text = "Score: " + ( tail - 5);
+    text = "Score:      " + ( tail - 5);
     ctx.fillText(text, 1 * blockx, 2 * blocky);
+    if(highscore > 0) {
+        text = "High Score: " + highscore;
+        ctx.fillText(text, 1 * blockx, 3 * blocky);
+    }
     if(ax == px && ay == py) {
         tail++;
         ax = Math.floor(Math.random() * maxx);
