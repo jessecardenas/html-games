@@ -21,7 +21,10 @@ ay = Math.floor(Math.random() * maxy);
 xv = yv = 0;
 trail = []; // array holding snake pieces
 tail = 5; // length of snake
-highscore = 0;
+highscore = getCookie('snakescore');
+if(highscore == undefined) {
+    highscore = 0;
+}
 keybuffer = []; // buffer for key presses. max one press per frame
 
 window.onload=function() {
@@ -105,6 +108,7 @@ function game() {
     if(highscore > 0) {
         text = "High Score: " + highscore;
         ctx.fillText(text, 1 * blockx, 3 * blocky);
+        setCookie("snakescore", highscore, 30)
     }
     if(ax == px && ay == py) {
         tail++;
@@ -118,6 +122,29 @@ function keyPush(evt) {
     if(keys.includes(evt.keyCode)) {
         keybuffer.push(evt.keyCode);
     }
+}
+
+function getCookie(name) {
+    var cookies = document.cookie.split(';');
+    for(var i = 0; i < cookies.length; i++) {
+        chompedCookie = cookies[i];
+        while(chompedCookie.charAt(0) == ' ') {
+            chompedCookie = chompedCookie.substring(1, chompedCookie.length);
+        }
+        if(chompedCookie.indexOf(name + '=') == 0) {
+            return chompedCookie.substring((name + '=').length, chompedCookie.length);
+        }
+    }
+}
+
+function setCookie(name, val, days) {
+    var expires = "";
+    if(days) {
+        expires = new Date();
+        expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + expires.toUTCString();
+    }
+    document.cookie = name + "=" + (val || "") + expires + ";"
 }
 
 </script>
