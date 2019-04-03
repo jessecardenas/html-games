@@ -92,6 +92,7 @@ function game() {
         if(i < trail.length - 1 && trail[i].x == px && trail[i].y == py) {
             if(tail - 5 > highscore) {
                 highscore = tail - 5;
+                setCookie("snakescore", highscore, 30)
             }
             tail = 5;
         }
@@ -108,7 +109,6 @@ function game() {
     if(highscore > 0) {
         text = "High Score: " + highscore;
         ctx.fillText(text, 1 * blockx, 3 * blocky);
-        setCookie("snakescore", highscore, 30)
     }
     if(ax == px && ay == py) {
         tail++;
