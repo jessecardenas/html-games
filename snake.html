@@ -80,7 +80,7 @@ function game() {
     if(py > maxy - 1) {
         py = 0;
     }
-    ctx.fillStyle = "black";
+    ctx.fillStyle = "rgba(0,0,0,.4)";
     ctx.fillRect(0, 0, canv.width, canv.height);
     ctx.fillStyle = "red";
     ctx.fillRect(ax * blockx, ay * blocky, blockx - 2, blocky - 2);
@@ -98,7 +98,12 @@ function game() {
         }
     }
     trail.push({x:px, y:py});
-    while(trail.length > tail) {
+    if(trail.length > tail) {
+        trail.shift();
+    }
+    if(trail.length > tail) {
+        ctx.fillStyle = "lime";
+        ctx.fillRect( (trail[0].x - 1) * blockx, (trail[0].y - 1) * blocky, blockx * 3, blocky * 3);
         trail.shift();
     }
     
@@ -111,6 +116,8 @@ function game() {
         ctx.fillText(text, 1 * blockx, 3 * blocky);
     }
     if(ax == px && ay == py) {
+        ctx.fillStyle = "red";
+        ctx.fillRect( (ax - 1) * blockx, (ay - 1) * blocky, blockx * 3, blocky * 3);
         tail++;
         ax = Math.floor(Math.random() * maxx);
         ay = Math.floor(Math.random() * maxy);
